@@ -1,0 +1,31 @@
+Initial research involved battery types, charging circuits and voltage regulators
+Components on rover need 5v so two lithium cells (7.4v) with a voltage regulator is good
+Orginially looked at linear regulators but these turned out to be inefficient. When the voltage is reduced the excess power is dissapated as heat.
+Now looking at variable buck converters (voltage reducer). Buck converters have a much better efficiency around 90%.
+
+Decided on:
+	lithium cells (in series) (7.4v, 3700mAh) ---> buck converter (5v higher current) ---> shared to system
+Power shared to the system is here on referred to as the 5v and GND rails.
+
+Raspberry pi can be powered directly through the 5v and GND (ground pins) on its board. However further research revealed that this, although feasible, would bypass
+the internal polyfuse which could cause damage to board if an incident occured.
+Instead, wiring 5v rail to a micro USB in order to power the Pi through the USB port means that the polyfuse remains operational.
+
+Current power calculations:
+Pi Zero - 0.5w
+6 motors - 1.8w
+Radio Transceiver - 0.7w
+Camera Module - 1.25w
+Assumed minimum with all systems running - 4.25w
+In actual use not all systems may run or some systems may operate at higher powers. In short power usage may vary.
+
+In this iteration of the design batteries would have to be removed from the rover in order to be charged.
+Solar power is a possible with the correct circuits. The company adafruit supplies a solar charge circuit that regulates current for maximum efficieny.
+Charging with solar requires the possibility that the system may be drawing power from LiPo cells whilst they are being "charged".
+This is reasonably easy to achieve with cells in parallel but cells in series can suffer from unbalanced voltages (could heat up and cause damage).
+Current system relies on cells in series so in order to use solar power I must transition to series.
+Proposed change:
+	lithium cells (in parallel) (3.7v, 7400mAh) ---> buck-boost converter (5v lower current) ---> 5v and GND rails
+
+A buck-boost converter allows the voltage to stay the same whether it is above or below the desired voltage. Slightly less efficient but higher than 90%.
+Power calculations above show that at least a 4.25w solar panel would have to be used in order for constant operation under the sun.

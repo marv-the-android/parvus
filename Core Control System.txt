@@ -1,0 +1,41 @@
+Modular approach to programming
+
+File Structure (of rover)
+	>Main.py (Main system file)
+	>Motor.py (Control of motor and servo systems)
+	>Capture.py (Image capture and processing)
+
+
+Program structure (of rover)
+
+Main.py (Main system file)
+>>> Startup
+	>> Motor and Capture libraries are imported
+	>> 433MHz transceiver library imported
+	>> Transceiver SPI connection initialized
+	>> Command library is declared
+		> Holds relationship between plaintext commands are appropriate program functions
+	>> Broadcasts "Ready to receive)
+>>> Main event loop
+	>> Checks for commands from base station
+		> Commands are sent in batches from base station with start and stop signals
+		> Commands are validated against internal command library and saved to list if valid
+		> Recieves commands until stop signal is registered
+	>> Commands list has been generated
+		> List operates like a queue
+		> First In, First Out
+	>> For each item in list
+		> Plaintext command is fetched from list and checked against library for relevant command
+		> Relevant command is run with paramters passed from plaintext
+		> Command is purged from list and loop occurs again with next command
+
+Motor.py (Library)
+>>> Startup
+	>> Import libraries
+		> GPIO Library (WiringPi / gpiozero / RPi.GPIO / PIGPIO)
+			- WiringPi 
+			- gpiozero
+			- RPi.GPIO is a development library and wasn't intentially designed for 3rd Party use. Some functions are 
+			- PIGPIO 
+		> time
+	>> 

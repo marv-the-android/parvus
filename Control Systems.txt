@@ -1,0 +1,31 @@
+PWM (Pulse Width Modulation)
+
+It consists of a signal that pulses between high and low.
+The pulse width as a fraction of the total signal period is known as a duty cycle.
+If a 180 degree servo had a control signal with a period of 1 seconds and the pulse lasted for 0.5 of a second then the duty cycle would be 50%.
+On a 180 degree servo a duty cycle of 50% would ideally cause the servo to turn to 90 degrees.
+Another thing about PWM is that because its a pulsed control signal it uses less energy and therefore leads to a more efficient system.
+
+Used by:
+	-Motor Controller
+	-Servos
+
+================================================================================================
+
+SPI (Serial Peripheral Interface)
+SPI is a type of synchronus data transmission. It utilises seperate transmission lines for the data and a "clock".
+The clock is a pulsed signal that ideally keeps both sides of the transmission environment perfectly synchronised.
+
+Used by:
+	-Radio Transceiver
+
+================================================================================================
+
+UART (Universal Asynchronous Receiver/Transmitter)
+UART is actually the name of the circuit within a microcontroller and it operates on serial communication protocol
+UART allows serial communcation between two devices.
+In the case of the rover it will be used for providing a connection between the rover and computer via a USB port.
+
+Used by:
+	-Debug port
+
