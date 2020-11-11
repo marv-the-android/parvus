@@ -35,7 +35,34 @@ Motor.py (Library)
 		> GPIO Library (WiringPi / gpiozero / RPi.GPIO / PIGPIO)
 			- WiringPi 
 			- gpiozero
-			- RPi.GPIO is a development library and wasn't intentially designed for 3rd Party use. Some functions are 
+			- RPi.GPIO is a development library and wasn't intentially designed for 3rd Party use. Some functions are missing.
 			- PIGPIO 
 		> time
-	>> 
+			- sleep
+		> Adafruit Servo Controller Library
+	>> Variables
+		> Motor Speed
+			- Global variable that motor functions can use
+			- Sets PWM to L298N controller
+>>> Define motor functions
+	>> Forward(seconds)
+		> Runs all wheels forward
+		> Takes motor speed as a variable
+	>> Backward(seconds)
+		> Runs all wheels backward
+		> Takes motor speed as a variable
+	>> Clockwise(seconds or degrees)
+		> Left wheels forward
+		> Right wheels backward
+		> Takes motor speed as a variable
+	>> Anticlockwise(seconds or degrees)
+		> Left wheels backward
+		> Right wheels forward
+		> Takes motor speed as a variable
+	>> Speed
+		> Allows radio command to modify rover speed
+>>> Define servo functions
+	>> Turn()
+		> Sets servos to position where rover can turn on the spot (wheels turned inwards)
+	>> Normal()
+		> Returns servos to standard position (all wheels forwards)

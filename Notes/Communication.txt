@@ -1,0 +1,37 @@
+>>> Initial Testing
+	>> Two main contenders for communcation in unlicensed commercial equipment
+
+		> 2.4GHz
+		Positives:
+			-High speed
+			-Very common and a lot of models/types
+			-Reliable
+			-Error correction
+			-Can be long range but requires direction antennas and some advanced modifications (Directional antennas would require tracking of target)
+		Drawbacks:
+			-Not particularly long range
+			-Not open source
+
+		> 433MHz
+		Positives:
+			-Open source and compatible with Arduino/Raspberry Pi
+			-Libraries allow for error correction
+			-Reasonably long range out-of-box
+			-Lower power compared to 2.4GHz
+		Drawbacks:
+			-VERY slow (~60 bytes/second)
+			-No real time comms (Not important for the rover as commands are sent in sets and executed)
+
+	>> 433MHz is the best choice
+	>> Speed and real time comms are not as important as longer range and lower power
+
+>>> Comms Hardware and software
+	>> Using adafruit 433MHz radio transceiver board.
+	>> This is a board designed around the HopeRF RFM69HCW chip but with added utilities
+		> Contains voltage protection
+		> Easy to connect due to pin outputs
+		> Voltage switching for GPIO pins
+			- 3.3v (Pi Zero)
+			- 5v (Arduino)
+	>> Uses SPI(Serial Peripheral Interface)
+	>> Adafruit supply a python library for communication

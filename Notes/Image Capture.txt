@@ -1,0 +1,19 @@
+Rover will capture an image with its camera, encode and transmit back to base station
+
+Started testing with a generic webcam and python OpenCV (Computer Vision) library that allows for capture and manipulation of photos
+
+
+A typical high definition photo (~5MB) would take around 23 hours to transmit so the images captured by the rover must be modified
+This is because the 433MHz radio transceiver can only transmit a 60-byte packet every second
+
+But, with OpenCV I can crop captured images to a smaller resoulation (i.e. from 1080x1920 to 100x100) as well as converting to greyscale; furthing reducing file size
+Modified images are about 10KB in size and take around 2.5 minutes to transmit (althoug this would increase if error checking were to be enabled)
+
+I have successfully transmitted images in this way over a range of distances although sometimes a image needs to be sent more than one if an error has occurred.
+
+
+One goal is to have the resolution of the image be user defined at a base station terminal
+When an image capture command is recieved the rover would calculate file size and transfer time and relay this to the user in order to recieve confirmation
+
+In the final design the rover's camera would be a Raspberry Pi compatible camera that connects through a designated camera slot on the Pi itself
+I also intend to have the camera mounted on a servo controlled pivot to allow a wider viewing range

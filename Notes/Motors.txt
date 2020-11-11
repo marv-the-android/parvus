@@ -1,0 +1,24 @@
+Initial research was into different types of motors available
+
+AC motors are ruled out as the power source is DC
+
+Intially cosidered brushless motors as these are highly resilient to wear and breaking down. Good for mars where there is no way for repairs.
+
+However, brushless are expensive and typically require higher voltages and currents to run as well as more complex and larger control boards.
+
+Research moved to simple, brushed DC motors.
+
+Small geared motors are available in a variety of ratios. These allow for high torque in a small form factor.
+I chose 6 298:1 gear motors as these give good torque with a slight reduction on max velocity (speed isn't too important).
+
+Rover would have a rocker bogie suspension with each strut terminating in a motor. Front and back motors would be individually controlled by servos.
+
+I decided I would use MG90S 14g servos as these contain metal gears over the plastic SG90 9g servos. Servos can be controlled directly by signals from the Raspberry Pi zero.
+
+To control the main motors I need a motor driver board. There are a wide range of boards available across a massive price range but I chose the L298N driver.
+Its a well known technology and packs of 5 can be picked up from Amazon for ~£8.
+
+Testing of motors with the driver board went well and speed was successfully controlled through a PWM (Pulse width modulation) signal from a Raspberry Pi.
+
+Some further research revealed that the L298N is an old design so, despite being cheap and reliable, it is very inefficient when compared to more modern designs.
+Future prototypes may swap L298N for a more efficient chip such as TB6612.
