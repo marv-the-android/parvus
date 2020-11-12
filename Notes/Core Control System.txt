@@ -1,3 +1,21 @@
+PARVUS System Hardware Layout
+
+>>> PARVUS (Rover)
+	>> Pi Zero
+		> Integrated with:
+			- Motor Controller
+			- Camera
+			- I2C Servo Board
+		> Code runs on startup
+>>> Base Station
+	>> Rasperry Pi
+		> Raspberry Pi directly interfaces with radio transciever
+	>> Arduino
+		> Connects to radio transciever
+		> Relays recieved information to connected device via USB
+		> Python program parses data from PARVUS via Arduino and provides a user interface (command terminal)
+		> Can be used with any device that supports USB and python
+
 Modular approach to programming
 
 File Structure (of rover)
@@ -5,8 +23,8 @@ File Structure (of rover)
 	>Motor.py (Control of motor and servo systems)
 	>Capture.py (Image capture and processing)
 
-
 Program structure (of rover)
+Rough representation of program run order
 
 Main.py (Main system file)
 >>> Startup
@@ -66,3 +84,20 @@ Motor.py (Library)
 		> Sets servos to position where rover can turn on the spot (wheels turned inwards)
 	>> Normal()
 		> Returns servos to standard position (all wheels forwards)
+
+Communication
+>>> Startup
+	>> Import Libaries
+		> Adafruit RFM69 transciever libary as radio
+		> Time
+	>> Define variables
+		> Frequency
+		> GPIO Pin Outs
+			- CS
+			- RESET
+	>> Initialise RFM69 Object
+		> Takes Frequency and GPIO Pin variables to declare where the radio hardware is connected
+>>> Define Comms Functions
+	>> Initial()
+		- Runs on rover boot
+		- Broadcasts an "online" notifier to base station
