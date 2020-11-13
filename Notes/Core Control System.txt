@@ -1,7 +1,3 @@
->>> Current and initial testing done on Raspbian/Raspberry Pi OS lite
-	>> Raspbian is a Pi compatibile distro of Debian
-		> Recently renamed to Raspberry Pi OS
-
 PARVUS System Hardware Layout
 
 >>> PARVUS (Rover)
