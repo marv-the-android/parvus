@@ -13,21 +13,22 @@
 >>> Camera mount
 	>> Attached to servo to allow left/right movement of field of view
 	>> Servo attached to top acrylic via screws
->>> Rocker bogie
+>>> Rocker bogie (Old)
 	>> 3mm acrylic
 		> Acrylic doesn't produce much friction against itself so 2 moving pieces back to back work well in acrylic
 	>> Connects to bottom sheet
 		> Custom 3D-printed L-bracket
 	>> Rocker bogie ends terminated in 3mm screw holes for motor and servo mounts
+>>> Rocker Bogie (New)
+	>> Custom 3D printed parts visually based off of Sojourner mars rover
 >>> Servo mount
-	>> Mounts laterally to rocker bogie screw holes
-	>> Consists of a side mount and a servo area
-		> Servo slides into casing
-		> Casing screws into rocker bogie
+	>> Built into new rocker bogie
+	>> Servo is mounted directly under corners of rover reducing wheel base width
 >>> Motor Mount
 	>> Motor sits tight in mount
 	>> Front and back wheels
 		> 2 small holes connect motor mount to servo arm
+		> Motor sits directtly under servo center of rotation
 	>> Mid wheels
 		>> Motor mount differs on mid wheels
 			> Mid wheels do not turn so motor is mounted directly to rocker bogie
