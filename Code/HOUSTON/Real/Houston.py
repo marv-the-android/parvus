@@ -8,7 +8,7 @@ class CommandCreate:
 
     def Main(self):
         self.initialise()
-        self.loop = urwid.MainLoop(urwid.Columns(self.mainview), unhandled_input=self.exit_on_q)
+        self.loop = urwid.MainLoop(urwid.Columns(self.mainview), unhandled_input=self.keypress, palette=[("reversed", "standout", "")])
         self.loop.run()
 
     def initialise(self):
@@ -30,11 +30,13 @@ class CommandCreate:
         line = urwid.LineBox(fill)
         self.mainview.append(line)
 
-    def exit_on_q(self, key):
-        if key in ["q", "Q"]:
+    def keypress(self, key):
+        if key in ["Q"]:
             raise urwid.ExitMainLoop()
         elif key in string.ascii_lowercase:
-            self.content.append(urwid.Text(key, align="center"))
+            test = urwid.Button(key)
+            pad = urwid.Padding(test, align="center", width=("relative", 25))
+            self.content.append(urwid.AttrMap(pad, None, focus_map="reversed"))
         elif key in ["R"]:
             self.content.clear()
 
