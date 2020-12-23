@@ -13,8 +13,7 @@ class CommandCreate:
 
     def initialise(self):
         self.mainview = []
-        self.input()
-        self.output()
+        self.mainview.extend([self.input(), self.output()])
 
     def input(self):
         buttonlist = u"Drive Reverse Clockwise".split()
@@ -27,7 +26,7 @@ class CommandCreate:
         adapt = urwid.BoxAdapter(listbox, height=self.rows)
         fill = urwid.Filler(adapt)
         line = urwid.LineBox(fill)
-        self.mainview.append(line)
+        return(line)
 
     def output(self):
         self.content = urwid.SimpleFocusListWalker([])
@@ -35,11 +34,21 @@ class CommandCreate:
         adapt = urwid.BoxAdapter(listbox, height=self.rows)
         fill = urwid.Filler(adapt)
         line = urwid.LineBox(fill)
-        self.mainview.append(line)
+        return(line)
 
     def MenuEntry(self, button, choice):
-        selected = urwid.Button(choice)
-        self.content.append(urwid.AttrMap(selected, None, focus_map="reversed"))
+        currentfocus = self.content.get_focus()[1]
+        if currentfocus == None:
+            selected = urwid.Button(choice)
+            urwid.connect_signal(selected, "click", self.Remove)
+            self.content.append(urwid.AttrMap(selected, None, focus_map="reversed"))
+        else:
+            selected = urwid.Button(choice)
+            urwid.connect_signal(selected, "click", self.Remove)
+            self.content.insert(currentfocus+1, urwid.AttrMap(selected, None, focus_map="reversed"))
+
+    def Remove(self, button):
+        del self.content[(self.content.get_focus()[1])]
 
     def keypress(self, key):
         if key in ["Q"]:
