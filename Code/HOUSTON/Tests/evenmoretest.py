@@ -46,6 +46,7 @@ class CommandCreate:
             selected = urwid.Button(choice)
             urwid.connect_signal(selected, "click", self.Remove)
             self.content.insert(currentfocus+1, urwid.AttrMap(selected, None, focus_map="reversed"))
+            self.content.set_focus(currentfocus+1)
 
     def Remove(self, button):
         del self.content[(self.content.get_focus()[1])]
