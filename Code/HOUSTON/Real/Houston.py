@@ -8,11 +8,15 @@ cs = digitalio.DigitalInOut(board.D22)
 reset = digitalio.DigitalInOut(board.D27)
 rfm69 = adafruit_rfm69.RFM69(spi, cs, reset, 433.0)
 
-def ackwait():
-	ackpack = None
-	while ackpack == None:
-		ackpack = rfm69.receive()
-		sleep(0.1)
+def resend(packet):
+    ackpack = None
+    while ackpack == None:
+        rfm69.send(packet)
+        for i in range(30):
+            ackpack = rfm69.receive()
+            if ackpack is not None:
+                break
+            sleep(0.1)
 
 class MainScreen:
     def Main(self):
@@ -42,7 +46,7 @@ class MainScreen:
         commandbox = urwid.ListBox(self.commands)
         commandbox = urwid.LineBox(commandbox)
         return commandbox
-    
+
     def Info(self):
         intro = "Welcome to the PARVUS Instruction set development environment!"
         commandlist = [
@@ -62,7 +66,7 @@ class MainScreen:
         info = urwid.Filler(info, valign="top")
         info = urwid.LineBox(info)
         return info
-    
+
     def keypress(self, key):
         if key in ["f12"]:
             raise urwid.ExitMainLoop()
@@ -87,19 +91,16 @@ class MainScreen:
                 for c in self.commands:
                     temp = c.original_widget.original_widget.get_label()
                     f.write("{}\n".format(temp))
-					
+
         elif key == "f2":
-            rfm69.send(bytes("start", "utf-8"))
-            ackwait()
+            resend(bytes("start {0}".format(len(self.commands)), "utf-8"))
             sleep(1)
             for c in self.commands:
                 temp = c.original_widget.original_widget.get_label()
-                txpacket = bytes(line.strip(), "utf-8")
-                print(txpacket)
-                rfm69.send(txpacket)
-                ackwait()
+                txpacket = bytes(temp.strip(), "utf-8")
+                resend(txpacket)
                 sleep(1)
-            rfm69.send(bytes("end", "utf-8"))
+            resend(bytes("end", "utf-8"))
             sleep(1)
 
 main = MainScreen()
