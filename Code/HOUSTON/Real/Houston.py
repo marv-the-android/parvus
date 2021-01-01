@@ -88,19 +88,19 @@ class MainScreen:
                     temp = c.original_widget.original_widget.get_label()
                     f.write("{}\n".format(temp))
 					
-		elif key == "f2":
-			rfm69.send(bytes("start", "utf-8"))
-			ackwait()
-			sleep(1)
-			for c in self.commands:
-				temp = c.original_widget.original_widget.get_label()
-				txpacket = bytes(line.strip(), "utf-8")
-				print(txpacket)
-				rfm69.send(txpacket)
-				ackwait()
-				sleep(1)
-			rfm69.send(bytes("end", "utf-8"))
-			sleep(1)
+        elif key == "f2":
+            rfm69.send(bytes("start", "utf-8"))
+            ackwait()
+            sleep(1)
+            for c in self.commands:
+                temp = c.original_widget.original_widget.get_label()
+                txpacket = bytes(line.strip(), "utf-8")
+                print(txpacket)
+                rfm69.send(txpacket)
+                ackwait()
+                sleep(1)
+            rfm69.send(bytes("end", "utf-8"))
+            sleep(1)
 
 main = MainScreen()
 main.Main()
