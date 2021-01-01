@@ -1,5 +1,19 @@
 import urwid, urwid.numedit
 
+import board, busio, digitalio, adafruit_rfm69
+from time import sleep
+
+spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+cs = digitalio.DigitalInOut(board.D22)
+reset = digitalio.DigitalInOut(board.D27)
+rfm69 = adafruit_rfm69.RFM69(spi, cs, reset, 433.0)
+
+def ackwait():
+	ackpack = None
+	while ackpack == None:
+		ackpack = rfm69.receive()
+		sleep(0.1)
+
 class MainScreen:
     def Main(self):
         loop = urwid.MainLoop(self.Setup(), unhandled_input=self.keypress, palette=[("reversed", "standout", "")])
@@ -54,7 +68,7 @@ class MainScreen:
             raise urwid.ExitMainLoop()
         elif key in "1 2 3 4".split():
             numkey = int(key)-1
-            commandparam = ["Drive", "Reverse", "Clockwise", "Anticlockwise"]
+            commandparam = ["drive", "reverse", "clockwise", "anticlockwise"]
             newcommand = "{0} {1}".format(commandparam[numkey], self.configvalues[numkey].original_widget.value())
             newcommand = urwid.Button(newcommand)
             newcommand = urwid.Padding(newcommand, align="left", width=("relative", 50))
@@ -73,6 +87,20 @@ class MainScreen:
                 for c in self.commands:
                     temp = c.original_widget.original_widget.get_label()
                     f.write("{}\n".format(temp))
+					
+		elif key == "f2":
+			rfm69.send(bytes("start", "utf-8"))
+			ackwait()
+			sleep(1)
+			for c in self.commands:
+				temp = c.original_widget.original_widget.get_label()
+				txpacket = bytes(line.strip(), "utf-8")
+				print(txpacket)
+				rfm69.send(txpacket)
+				ackwait()
+				sleep(1)
+			rfm69.send(bytes("end", "utf-8"))
+			sleep(1)
 
 main = MainScreen()
 main.Main()
